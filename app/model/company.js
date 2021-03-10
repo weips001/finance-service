@@ -20,6 +20,6 @@ module.exports = app => {
       type: String,
       default: new Date().toString()
     }
-  });
+  })
   return mongoose.model('Company', CompanySchema);
 };
