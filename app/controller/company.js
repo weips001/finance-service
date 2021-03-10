@@ -6,7 +6,7 @@ class CompanyController extends Controller {
   async list() {
     const ctx = this.ctx;
     const {current, pageSize} = ctx.query;
-    const filter = {
+    const filter = {  
     };
     const limit = parseInt(pageSize || 20);
     const offset = (parseInt(current || 1) - 1) * limit;
