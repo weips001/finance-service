@@ -1,11 +1,16 @@
 'use strict';
 
 const Service = require('egg').Service;
+const dayjs = require('dayjs') 
 class CompanyService extends Service {
-  async list(filter, limit = 10, offset = 0) {
+  async list(filter, limit = 10, offset = 0, sorter) {
     const ctx = this.ctx;
+    let sorterKey = 1
+    if(!!sorter) {
+      sorterKey = sorter.dueDate === "descend"?1:-1
+    }
     const [ data, total ] = await Promise.all([
-      ctx.model.Company.find(filter).skip(offset).limit(limit)
+      ctx.model.Company.find(filter).sort({"compName": sorterKey}).skip(offset).limit(limit)
         .lean()
         .exec(),
       ctx.model.Company.countDocuments(filter)
@@ -21,6 +26,13 @@ class CompanyService extends Service {
   }
   async add(data = {}) {
     const ctx = this.ctx;
+    const comMod = await this.nameExist(data.compName)
+    if (!comMod) {
+      return {
+        code: 1,
+        msg: '该公司已存在',
+      };
+    }
     const CompanyModel = ctx.model.Company({
       id: ctx.helper.generateId(),
       compName: data.compName,
@@ -28,7 +40,7 @@ class CompanyService extends Service {
       address: data.address,
       bossName: data.bossName,
       bossPhone: data.bossPhone,
-      dueDate: data.dueDate,
+      dueDate: dayjs().add(30, 'day').format(),
     });
     await CompanyModel.save();
     return { code: 0 };

@@ -6,11 +6,12 @@ class CompanyController extends Controller {
   async list() {
     const ctx = this.ctx;
     const {current, pageSize} = ctx.query;
-    const filter = {  
+    const filter = {
     };
+    const sorter= ctx.query.sorter  
     const limit = parseInt(pageSize || 20);
     const offset = (parseInt(current || 1) - 1) * limit;
-    this.ctx.body = await this.ctx.service.company.list(filter, limit, offset);
+    this.ctx.body = await this.ctx.service.company.list(filter, limit, offset, sorter);
   }
   async get() {
     const ctx = this.ctx;
