@@ -5,13 +5,25 @@ module.exports = app => {
   const Schema = mongoose.Schema;
 
   const UserSchema = new Schema({
-    id: String,
-    userName: String,
+    id: Schema.Types.ObjectId,
+    userName: {
+      type: String,
+      required: true
+    },
     department: String,
-    userPhone: String,
+    userPhone: {
+      type: String,
+      required: true
+    },
     userEmail: String,
-    createTime: { type: Date, default: Date.now },
-    updateTime: { type: Date, default: Date.now },
+    createTime: { 
+      type: String,
+      default: new Date().toString()
+    },
+    compId: {
+      type: Schema.Types.ObjectId,
+      ref: "Company"
+    }
   });
   return mongoose.model('User', UserSchema);
 };
