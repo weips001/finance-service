@@ -31,6 +31,7 @@ class CompanyService extends Service {
       return {
         code: 1,
         msg: '该公司已存在',
+        success: false,
       };
     }
     const CompanyModel = ctx.model.Company({
@@ -52,6 +53,7 @@ class CompanyService extends Service {
       return {
         code: 1,
         msg: 'Company不存在',
+        success: false,
       };
     }
     if (typeof data.compName !== 'undefined') {
@@ -73,7 +75,7 @@ class CompanyService extends Service {
     CompanyModel.dueDate = data.dueDate;
     }
     await CompanyModel.save();
-    return { code: 0 };
+    return { code: 0, success: true };
   }
   async remove(data) {
     const ctx = this.ctx;
@@ -89,6 +91,7 @@ class CompanyService extends Service {
     })
     return {
       code: 0,
+      success: true,
     };
   }
   async nameExist(name, id) {
