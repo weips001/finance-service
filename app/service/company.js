@@ -63,9 +63,9 @@ class CompanyService extends Service {
     await CompanyModel.save();
     return { code: 0 };
   }
-  async remove(arr) {
+  async remove(data) {
     const ctx = this.ctx;
-    arr.forEach(async (id)=>{
+    data.deleteArr.forEach(async (id)=>{
       const Company = await ctx.model.Company.findOne({ id }).exec();
       if (!Company) {
         return {
