@@ -8,8 +8,7 @@ module.exports = app => {
     id: String,
     compName: {
       type: String,
-      require: true,
-      unique: true
+      require: true
     },
     status: String,
     address: String,
