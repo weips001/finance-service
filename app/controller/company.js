@@ -23,8 +23,7 @@ class CompanyController extends Controller {
   }
   async remove() {
     const ctx = this.ctx;
-    const id = ctx.params.id;
-    ctx.body = await ctx.service.company.remove(id);
+    ctx.body = await ctx.service.company.remove(ctx.request.body);
   }
   async update() {
     const ctx = this.ctx;

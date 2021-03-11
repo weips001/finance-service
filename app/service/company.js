@@ -63,16 +63,18 @@ class CompanyService extends Service {
     await CompanyModel.save();
     return { code: 0 };
   }
-  async remove(id) {
+  async remove(arr) {
     const ctx = this.ctx;
-    const Company = await ctx.model.Company.findOne({ id }).exec();
-    if (!Company) {
-      return {
-        code: 0,
-        msg: '该公司不存在',
-      };
-    }
-    await Company.remove();
+    arr.forEach(async (id)=>{
+      const Company = await ctx.model.Company.findOne({ id }).exec();
+      if (!Company) {
+        return {
+          code: 0,
+          msg: '该公司不存在',
+        };
+      }
+      await Company.remove();
+    })
     return {
       code: 0,
     };
