@@ -27,7 +27,8 @@ class CompanyService extends Service {
   async add(data = {}) {
     const ctx = this.ctx;
     const comMod = await this.nameExist(data.compName)
-    if (comMod) {
+    if (!comMod) {
+      console.log(234234)
       return {
         code: 1,
         msg: '该公司已存在',
