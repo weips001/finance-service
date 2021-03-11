@@ -27,8 +27,7 @@ class CompanyService extends Service {
   async add(data = {}) {
     const ctx = this.ctx;
     const comMod = await this.nameExist(data.compName)
-    if (!comMod) {
-      console.log(234234)
+    if (comMod) {
       return {
         code: 1,
         msg: '该公司已存在',
@@ -38,7 +37,7 @@ class CompanyService extends Service {
     const CompanyModel = ctx.model.Company({
       id: ctx.helper.generateId(),
       compName: data.compName,
-      status: data.status,
+      status: 0,
       address: data.address,
       bossName: data.bossName,
       bossPhone: data.bossPhone,
@@ -60,20 +59,17 @@ class CompanyService extends Service {
     if (typeof data.compName !== 'undefined') {
       CompanyModel.compName = data.compName;
     }
-    if (typeof data.status !== 'undefined') {
-      CompanyModel.status = data.status;
-    }
     if (typeof data.address !== 'undefined') {
       CompanyModel.address = data.address;
     }
     if (typeof data.bossName !== 'undefined') {
-        CompanyModel.bossName = data.bossName;
+      CompanyModel.bossName = data.bossName;
     }
     if (typeof data.bossPhone !== 'undefined') {
-    CompanyModel.bossPhone = data.bossPhone;
+      CompanyModel.bossPhone = data.bossPhone;
     }
     if (typeof data.dueDate !== 'undefined') {
-    CompanyModel.dueDate = data.dueDate;
+      CompanyModel.dueDate = data.dueDate;
     }
     await CompanyModel.save();
     return { code: 0, success: true };
@@ -95,10 +91,10 @@ class CompanyService extends Service {
       success: true,
     };
   }
-  async nameExist(name, id) {
+  async nameExist(compName, id) {
     const ctx = this.ctx;
     const filter = {
-      name,
+      compName,
     };
     if (id) {
       filter.id = { $ne: id };

@@ -9,7 +9,15 @@ class CompanyController extends Controller {
     const query = ctx.query
     const filter = {
     };
-    query.compName ? filter.compName = query.compName : null;
+    if (query.compName) {
+      filter['compName'] = new RegExp(ctx.helper.escapeStringRegExp(query.compName), 'i');
+    }
+    if (query.bossName) {
+      filter['bossName'] = new RegExp(ctx.helper.escapeStringRegExp(query.bossName), 'i');
+    }
+    if (query.bossPhone) {
+      filter['bossPhone'] = new RegExp(ctx.helper.escapeStringRegExp(query.bossPhone), 'i');
+    }
     const sorter= ctx.query.sorter  
     const limit = parseInt(pageSize || 20);
     const offset = (parseInt(current || 1) - 1) * limit;
