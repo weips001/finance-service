@@ -23,7 +23,7 @@ class UserService extends Service {
   async add(data = {}) {
     const ctx = this.ctx;
     const app = this.app;
-    const exist = await this.phoneExist(data.callPhone, data.id);
+    const exist = await this.phoneExist(data.userPhone, data.id);
     if (exist) {
       return {
         code: 1,
@@ -79,7 +79,7 @@ class UserService extends Service {
   }
   async remove(data) {
     const ctx = this.ctx;
-    const User = await ctx.model.User.findOne({ id }).exec();
+    console.log(data, 8222)
     data.deleteArr.forEach(async (id)=>{
       const User = await ctx.model.User.findOne({ id }).exec();
       if (!User) {
@@ -88,18 +88,18 @@ class UserService extends Service {
           msg: '该用户不存在',
         };
       }
+      console.log(User, 9000)
       await User.remove();
     })
-    await User.remove();
     return {
       code: 0,
       success: true
     };
   }
-  async phoneExist(callPhone, id) {
+  async phoneExist(userPhone, id) {
     const ctx = this.ctx;
     const filter = {
-      callPhone,
+      userPhone,
     };
     if (id) {
       filter.id = { $ne: id };
