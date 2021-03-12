@@ -31,6 +31,7 @@ class UserService extends Service {
         success: false
       };
     }
+    const compId = ctx.request.header.compId
     const token = app.jwt.sign({ name: data.name }, app.config.jwt.secret);
     const UserModel = ctx.model.User({
       id: ctx.helper.generateId(),
@@ -40,6 +41,7 @@ class UserService extends Service {
       userEmail: data.userEmail,
       password: md5('123456'),
       token,
+      compId: compId
     });
     await UserModel.save();
     return { code: 0,success: true };
