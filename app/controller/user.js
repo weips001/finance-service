@@ -6,6 +6,7 @@ class UserController extends Controller {
   async list() {
     const ctx = this.ctx;
     const query = ctx.query;
+    const {current, pageSize} = ctx.query;
     const filter = {
     };
     if (query.userCode) {
@@ -27,8 +28,8 @@ class UserController extends Controller {
     if (query.department) {
       filter['department'] = new RegExp(ctx.helper.escapeStringRegExp(query.department), 'i');
     }
-    const limit = parseInt(query.limit || 10);
-    const offset = (parseInt(query.page || 1) - 1) * limit;
+    const limit = parseInt(pageSize || 20);
+    const offset = (parseInt(current || 1) - 1) * limit;
     this.ctx.body = await this.ctx.service.user.list(filter, limit, offset);
   }
   async get() {
