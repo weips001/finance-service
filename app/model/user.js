@@ -5,7 +5,7 @@ module.exports = app => {
   const Schema = mongoose.Schema;
 
   const UserSchema = new Schema({
-    id: Schema.Types.ObjectId,
+    id: String,
     userCode: String,
     userName: {
       type: String,
@@ -32,9 +32,10 @@ module.exports = app => {
       type: String
     },
     compId: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: "Company"
-    }
+    },
+    token: String,
   });
   return mongoose.model('User', UserSchema);
 };

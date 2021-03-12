@@ -54,7 +54,7 @@ class UserController extends Controller {
     const ctx = this.ctx;
     const token = ctx.request.header.authorization.substr(7, 1000);
     const compId = ctx.request.header.compId
-    ctx.body = await ctx.service.user.getCurrentUser(token);
+    ctx.body = await ctx.service.user.getCurrentUser(token, compId);
   }
 }
 

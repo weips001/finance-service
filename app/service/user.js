@@ -5,20 +5,20 @@ const Service = require('egg').Service;
 class UserService extends Service {
   async list(filter, limit = 10, offset = 0) {
     const ctx = this.ctx;
-    const [ list, total ] = await Promise.all([
-      ctx.model.User.find(filter, { imgUrl: 0, token: 0 }).skip(offset).limit(limit)
+    const [ data, total ] = await Promise.all([
+      ctx.model.User.find(filter).skip(offset).limit(limit)
         .lean()
         .exec(),
       ctx.model.User.countDocuments(filter)
         .lean()
         .exec(),
     ]);
-    return { list, total, code: 0 };
+    return { data, total, code: 0, success: true };
   }
   async get(id) {
     const ctx = this.ctx;
     const doc = await ctx.model.User.findOne({ id }).lean().exec();
-    return { code: 0, data: doc };
+    return { code: 0, data: doc, success: true };
   }
   async add(data = {}) {
     const ctx = this.ctx;
@@ -28,21 +28,21 @@ class UserService extends Service {
       return {
         code: 1,
         msg: '改账号已存在',
+        success: false
       };
     }
     const token = app.jwt.sign({ name: data.name }, app.config.jwt.secret);
     const UserModel = ctx.model.User({
       id: ctx.helper.generateId(),
-      name: data.name,
-      role: data.role,
-      callPhone: data.callPhone,
-      desc: data.desc,
+      userName: data.userName,
+      department: data.department,
+      userPhone: data.userPhone,
+      userEmail: data.userEmail,
       password: md5('123456'),
-      createTime: new Date(),
       token,
     });
     await UserModel.save();
-    return { code: 0 };
+    return { code: 0,success: true };
   }
   async update(id, data = {}) {
     const ctx = this.ctx;
@@ -51,6 +51,7 @@ class UserService extends Service {
       return {
         code: 1,
         msg: 'User不存在',
+        success: false
       };
     }
     if (typeof data.userName !== 'undefined') {
@@ -72,7 +73,7 @@ class UserService extends Service {
       UserModel.password = data.password;
     }
     await UserModel.save();
-    return { code: 0 };
+    return { code: 0, success: true };
   }
   async remove(data) {
     const ctx = this.ctx;
@@ -90,6 +91,7 @@ class UserService extends Service {
     await User.remove();
     return {
       code: 0,
+      success: true
     };
   }
   async phoneExist(callPhone, id) {
