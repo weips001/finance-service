@@ -53,31 +53,40 @@ class UserService extends Service {
         msg: 'User不存在',
       };
     }
-    if (typeof data.name !== 'undefined') {
-      UserModel.name = data.name;
+    if (typeof data.userName !== 'undefined') {
+      UserModel.userName = data.userName;
     }
-    if (typeof data.desc !== 'undefined') {
-      UserModel.desc = data.desc;
+    if (typeof data.department !== 'undefined') {
+      UserModel.department = data.department;
     }
-    if (typeof data.callPhone !== 'undefined') {
-      UserModel.callPhone = data.callPhone;
+    if (typeof data.userPhone !== 'undefined') {
+      UserModel.userPhone = data.userPhone;
     }
-    if (typeof data.imgUrl !== 'undefined') {
-      UserModel.imgUrl = data.imgUrl;
+    if (typeof data.userEmail !== 'undefined') {
+      UserModel.userEmail = data.userEmail;
     }
-    UserModel.role = data.role;
+    if (typeof data.status !== 'undefined') {
+      UserModel.status = data.status;
+    }
+    if (typeof data.password !== 'undefined') {
+      UserModel.password = data.password;
+    }
     await UserModel.save();
     return { code: 0 };
   }
-  async remove(id) {
+  async remove(data) {
     const ctx = this.ctx;
     const User = await ctx.model.User.findOne({ id }).exec();
-    if (!User) {
-      return {
-        code: 0,
-        msg: '该角色不存在',
-      };
-    }
+    data.deleteArr.forEach(async (id)=>{
+      const User = await ctx.model.User.findOne({ id }).exec();
+      if (!User) {
+        return {
+          code: 0,
+          msg: '该用户不存在',
+        };
+      }
+      await User.remove();
+    })
     await User.remove();
     return {
       code: 0,

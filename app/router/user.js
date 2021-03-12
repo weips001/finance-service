@@ -7,5 +7,5 @@ module.exports = app => {
   router.get('/api/user/:id', controller.user.get);
   router.post('/api/user', controller.user.add);
   router.put('/api/user/:id', controller.user.update);
-  router.delete('/api/user/:id', controller.user.remove);
+  router.delete('/api/user', controller.user.remove);
 };
