@@ -43,7 +43,7 @@ class UserController extends Controller {
   }
   async remove() {
     const ctx = this.ctx;
-    ctx.body = await ctx.service.company.remove(ctx.request.body);
+    ctx.body = await ctx.service.user.remove(ctx.request.body);
   }
   async update() {
     const ctx = this.ctx;
