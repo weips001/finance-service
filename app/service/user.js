@@ -6,7 +6,7 @@ class UserService extends Service {
   async list(filter, limit = 10, offset = 0) {
     const ctx = this.ctx;
     const [ data, total ] = await Promise.all([
-      ctx.model.User.find(filter).skip(offset).limit(limit)
+      ctx.model.User.find(filter,{password: 0}).skip(offset).limit(limit)
         .lean()
         .exec(),
       ctx.model.User.countDocuments(filter)
