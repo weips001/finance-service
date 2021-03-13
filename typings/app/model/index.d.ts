@@ -3,6 +3,7 @@
 
 import 'egg';
 import ExportCompany = require('../../../app/model/company');
+import ExportPaymentOrder = require('../../../app/model/paymentOrder');
 import ExportRole = require('../../../app/model/role');
 import ExportSubject = require('../../../app/model/subject');
 import ExportSubjectFour = require('../../../app/model/subjectFour');
@@ -12,6 +13,7 @@ import ExportUser = require('../../../app/model/user');
 declare module 'egg' {
   interface IModel {
     Company: ReturnType<typeof ExportCompany>;
+    PaymentOrder: ReturnType<typeof ExportPaymentOrder>;
     Role: ReturnType<typeof ExportRole>;
     Subject: ReturnType<typeof ExportSubject>;
     SubjectFour: ReturnType<typeof ExportSubjectFour>;
