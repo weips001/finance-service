@@ -30,4 +30,11 @@ $ npm stop
 - Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
 
 
-[egg]: https://eggjs.org
+[存在的问题：]
+### 公司管理
+1. 新增成功需要向该公司人员列表插入当前人员信息
+
+### 人员管理
+1. 生成工号
+2. 创建时间排序
+3. populate 查询

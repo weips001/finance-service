@@ -17,6 +17,7 @@ module.exports = app => {
   require('./user')(app);
   require('./specialExercises')(app);
   require('./company')(app)
+  require('./bill')(app)
 
   // router.get('/*', controller.home.index);
 };
