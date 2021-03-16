@@ -2,6 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportBill = require('../../../app/model/bill');
 import ExportCompany = require('../../../app/model/company');
 import ExportPaymentOrder = require('../../../app/model/paymentOrder');
 import ExportRole = require('../../../app/model/role');
@@ -12,6 +13,7 @@ import ExportUser = require('../../../app/model/user');
 
 declare module 'egg' {
   interface IModel {
+    Bill: ReturnType<typeof ExportBill>;
     Company: ReturnType<typeof ExportCompany>;
     PaymentOrder: ReturnType<typeof ExportPaymentOrder>;
     Role: ReturnType<typeof ExportRole>;

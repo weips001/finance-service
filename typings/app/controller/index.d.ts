@@ -4,6 +4,7 @@
 import 'egg';
 import ExportCompany = require('../../../app/controller/company');
 import ExportHome = require('../../../app/controller/home');
+import ExportPdf = require('../../../app/controller/pdf');
 import ExportRole = require('../../../app/controller/role');
 import ExportSpecialExercises = require('../../../app/controller/specialExercises');
 import ExportSubject = require('../../../app/controller/subject');
@@ -13,6 +14,7 @@ declare module 'egg' {
   interface IController {
     company: ExportCompany;
     home: ExportHome;
+    pdf: ExportPdf;
     role: ExportRole;
     specialExercises: ExportSpecialExercises;
     subject: ExportSubject;
