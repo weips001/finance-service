@@ -11,7 +11,7 @@ module.exports = app => {
 
   router.post('/api/login', controller.home.login);
   router.post('/api/register', controller.home.register);
-  router.get('/api/wxLogin', controller.wxLogin.wxLogin);
+  router.post('/api/wxLogin', controller.wxLogin.wxLogin);
 
   require('./subject')(app);
   require('./role')(app);
