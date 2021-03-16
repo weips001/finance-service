@@ -26,25 +26,26 @@ class BillService extends Service {
   }
   async add(data = {}) {
     const ctx = this.ctx;
-    const comMod = await this.nameExist(data.compName)
+    const comMod = await this.nameExist(data.billNumber)
     if (comMod) {
       return {
         code: 1,
-        msg: '该公司已存在',
+        msg: '该发票已使用',
         success: false,
       };
     }
     const BillModel = ctx.model.Bill({
       id: ctx.helper.generateId(),
-      compName: data.compName,
-      status: 0,
-      address: data.address,
-      bossName: data.bossName,
-      bossPhone: data.bossPhone,
-      dueDate: dayjs().add(30, 'day').format(),
+      billCode: data.billCode,
+      billNumber: data.billNumber,
+      money: data.money,
+      billDate: data.billDate,
+      checkCode: data.checkCode,
+      createTime: data.createTime,
+      compId: compId
     });
     await BillModel.save();
-    return { code: 0 };
+    return { code: 0,success: true, msg: '添加成功'};
   }
   async update(id, data = {}) {
     const ctx = this.ctx;
@@ -91,10 +92,10 @@ class BillService extends Service {
       success: true,
     };
   }
-  async nameExist(compName, id) {
+  async nameExist(billNumber, id) {
     const ctx = this.ctx;
     const filter = {
-      compName,
+      billNumber,
     };
     if (id) {
       filter.id = { $ne: id };

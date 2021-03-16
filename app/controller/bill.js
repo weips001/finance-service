@@ -9,14 +9,14 @@ class BillController extends Controller {
     const query = ctx.query
     const filter = {
     };
-    if (query.compName) {
-      filter['compName'] = new RegExp(ctx.helper.escapeStringRegExp(query.compName), 'i');
+    if (query.billCode) {
+      filter['billCode'] = new RegExp(ctx.helper.escapeStringRegExp(query.billCode), 'i');
     }
-    if (query.bossName) {
-      filter['bossName'] = new RegExp(ctx.helper.escapeStringRegExp(query.bossName), 'i');
+    if (query.billNumber) {
+      filter['billNumber'] = new RegExp(ctx.helper.escapeStringRegExp(query.billNumber), 'i');
     }
-    if (query.bossPhone) {
-      filter['bossPhone'] = new RegExp(ctx.helper.escapeStringRegExp(query.bossPhone), 'i');
+    if (query.money) {
+      filter['money'] = new RegExp(ctx.helper.escapeStringRegExp(query.money), 'i');
     }
     const sorter= ctx.query.sorter  
     const limit = parseInt(pageSize || 20);
