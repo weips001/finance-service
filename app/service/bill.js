@@ -42,7 +42,8 @@ class BillService extends Service {
       billDate: data.billDate,
       checkCode: data.checkCode,
       createTime: data.createTime,
-      compId: compId
+      compId: data.compId,
+      openid: data.openid
     });
     await BillModel.save();
     return { code: 0,success: true, msg: '添加成功'};
