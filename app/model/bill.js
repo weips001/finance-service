@@ -39,7 +39,7 @@ module.exports = app => {
       type: String,
       ref: "Company"
     },
-    weId: String
+    openid: String
   });
   return mongoose.model('Bill', BillSchema);
 };
