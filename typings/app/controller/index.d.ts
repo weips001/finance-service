@@ -5,6 +5,7 @@ import 'egg';
 import ExportBill = require('../../../app/controller/bill');
 import ExportCompany = require('../../../app/controller/company');
 import ExportHome = require('../../../app/controller/home');
+import ExportPaymentOrder = require('../../../app/controller/paymentOrder');
 import ExportRole = require('../../../app/controller/role');
 import ExportSpecialExercises = require('../../../app/controller/specialExercises');
 import ExportSubject = require('../../../app/controller/subject');
@@ -16,6 +17,7 @@ declare module 'egg' {
     bill: ExportBill;
     company: ExportCompany;
     home: ExportHome;
+    paymentOrder: ExportPaymentOrder;
     role: ExportRole;
     specialExercises: ExportSpecialExercises;
     subject: ExportSubject;

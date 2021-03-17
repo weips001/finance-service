@@ -9,7 +9,6 @@ class CompanyController extends Controller {
     const query = ctx.query
     const filter = {
     };
-    console.log(234)
     if (query.compName) {
       filter['compName'] = new RegExp(ctx.helper.escapeStringRegExp(query.compName), 'i');
     }

@@ -8,6 +8,7 @@ type CanExportFunc = AnyFunc<Promise<any>> | AnyFunc<IterableIterator<any>>;
 type AutoInstanceType<T, U = T extends CanExportFunc ? T : T extends AnyFunc ? ReturnType<T> : T> = U extends AnyClass ? InstanceType<U> : U;
 import ExportBill = require('../../../app/service/bill');
 import ExportCompany = require('../../../app/service/company');
+import ExportPaymentOrder = require('../../../app/service/paymentOrder');
 import ExportRole = require('../../../app/service/role');
 import ExportSpecialExercises = require('../../../app/service/specialExercises');
 import ExportSubject = require('../../../app/service/subject');
@@ -18,6 +19,7 @@ declare module 'egg' {
   interface IService {
     bill: AutoInstanceType<typeof ExportBill>;
     company: AutoInstanceType<typeof ExportCompany>;
+    paymentOrder: AutoInstanceType<typeof ExportPaymentOrder>;
     role: AutoInstanceType<typeof ExportRole>;
     specialExercises: AutoInstanceType<typeof ExportSpecialExercises>;
     subject: AutoInstanceType<typeof ExportSubject>;
