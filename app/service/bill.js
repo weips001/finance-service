@@ -93,6 +93,20 @@ class BillService extends Service {
       success: true,
     };
   }
+  async billIsExit(billNumber) {
+    // const filter
+    const bill = await this.ctx.model.Bill.findOne({ billNumber }).exec();
+    if(bill) {
+      return {
+        code: 0,
+        msg: '发票不存在，可以录入'
+      }
+    }
+    return {
+      code: '1',
+      msg: '发票已存在'
+    }
+  }
   async nameExist(billNumber, id) {
     const ctx = this.ctx;
     const filter = {

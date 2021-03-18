@@ -7,4 +7,5 @@ module.exports = app => {
   router.post('/api/bill', controller.bill.add);
   router.put('/api/bill/:id', controller.bill.update);
   router.delete('/api/bill', controller.bill.remove);
+  router.get('/api/billIsExit', controller.bill.isExit);
 };

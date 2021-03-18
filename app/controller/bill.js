@@ -41,6 +41,12 @@ class BillController extends Controller {
     const id = ctx.params.id;
     ctx.body = await ctx.service.bill.update(id, ctx.request.body);
   }
+  async isExit() {
+    const ctx = this.ctx;
+    const billNumber = ctx.query.billNumber;
+    ctx.body = await ctx.service.bill.billIsExit(billNumber);
+  }
+  
 }
 
 module.exports = BillController;

@@ -34,13 +34,17 @@ class PaymentOrderService extends Service {
       payableAll: data.payableAll,
       payMoney: data.payMoney,
       payedMoney: data.payedMoney,
+      payMethod: data.payMethod,
+      hasProvideInvoice: data.hasProvideInvoice,
       invoiceNote: data.invoiceNote,
       payeeName: data.payeeName,
       payeeBankName: data.payeeBankName,
       bankAccount: data.bankAccount,
       status: data.status,
+      hasLastTime: data.hasLastTime,
       latestPayTime: data.latestPayTime,
       note: data.note,
+      hasNote: data.note,
       payTime: data.payTime
     });
     await PaymentOrderModel.save();
@@ -56,49 +60,61 @@ class PaymentOrderService extends Service {
         success: false,
       };
     }
-    if (typeof data.paymentOrderId !== 'undefined') {
+    if (typeof data.paymentOrderId != 'undefined') {
       PaymentOrderModel.paymentOrderId = data.paymentOrderId;
     }
-    if (typeof data.applyUserName !== 'undefined') {
+    if (typeof data.applyUserName != 'undefined') {
       PaymentOrderModel.applyUserName = data.applyUserName;
     }
-    if (typeof data.department !== 'undefined') {
+    if (typeof data.department != 'undefined') {
       PaymentOrderModel.department = data.department;
     }
-    if (typeof data.payDigest !== 'undefined') {
+    if (typeof data.payDigest != 'undefined') {
       PaymentOrderModel.payDigest = data.payDigest;
     }
-    if (typeof data.payableAll !== 'undefined') {
+    if (typeof data.payableAll != 'undefined') {
       PaymentOrderModel.payableAll = data.payableAll;
     }
-    if (typeof data.payedMoney !== 'undefined') {
+    if (typeof data.payedMoney != 'undefined') {
       PaymentOrderModel.payedMoney = data.payedMoney;
     }
-    if (typeof data.payMethod !== 'undefined') {
+    if (typeof data.payMoney != 'undefined') {
+      PaymentOrderModel.payMoney = data.payMoney;
+    }
+    if (typeof data.payMethod != 'undefined') {
       PaymentOrderModel.payMethod = data.payMethod;
     }
-    if (typeof data.invoiceNote !== 'undefined') {
+    if (typeof data.hasProvideInvoice != 'undefined') {
+      PaymentOrderModel.hasProvideInvoice = data.hasProvideInvoice;
+    }
+    if (typeof data.invoiceNote != 'undefined') {
       PaymentOrderModel.invoiceNote = data.invoiceNote;
     }
-    if (typeof data.payeeName !== 'undefined') {
+    if (typeof data.payeeName != 'undefined') {
       PaymentOrderModel.payeeName = data.payeeName;
     }
-    if (typeof data.payeeBankName !== 'undefined') {
+    if (typeof data.payeeBankName != 'undefined') {
       PaymentOrderModel.payeeBankName = data.payeeBankName;
     }
-    if (typeof data.bankAccount !== 'undefined') {
+    if (typeof data.bankAccount != 'undefined') {
       PaymentOrderModel.bankAccount = data.bankAccount;
     }
-    if (typeof data.status !== 'undefined') {
+    if (typeof data.status != 'undefined') {
       PaymentOrderModel.status = data.status;
     }
-    if (typeof data.latestPayTime !== 'undefined') {
+    if (typeof data.hasLastTime != 'undefined') {
+      PaymentOrderModel.hasLastTime = data.hasLastTime;
+    }
+    if (typeof data.latestPayTime != 'undefined') {
       PaymentOrderModel.latestPayTime = data.latestPayTime;
     }
-    if (typeof data.note !== 'undefined') {
+    if (typeof data.hasNote != 'undefined') {
+      PaymentOrderModel.hasNote = data.hasNote;
+    }
+    if (typeof data.note != 'undefined') {
       PaymentOrderModel.note = data.note;
     }
-    if (typeof data.payTime !== 'undefined') {
+    if (typeof data.payTime != 'undefined') {
       PaymentOrderModel.payTime = data.payTime;
     }
 
@@ -120,6 +136,28 @@ class PaymentOrderService extends Service {
     return {
       code: 0,
       success: true,
+    };
+  }
+  async submit(id) {
+    const PaymentOrderModel = await this.ctx.model.PaymentOrder.findOne({ id }).exec();
+    if (!PaymentOrderModel) {
+      return {
+        code: 1,
+        msg: '该订单不存在',
+        success: false,
+      };
+    }
+    if(PaymentOrderModel.status === '0') {
+      PaymentOrderModel.status = '1';
+      await PaymentOrderModel.save()
+      return {
+        code: 0,
+        msg: '订单提交成功'
+      };
+    }
+    return {
+      code: 1,
+      msg: '订单当前状态无法提交'
     };
   }
   async nameExist(paymentOrderNumber, id) {

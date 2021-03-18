@@ -53,6 +53,11 @@ class PaymentOrderController extends Controller {
     const id = ctx.params.id;
     ctx.body = await ctx.service.paymentOrder.update(id, ctx.request.body);
   }
+  async submit() {
+    const ctx = this.ctx;
+    const id = ctx.request.body.id;
+    ctx.body = await ctx.service.paymentOrder.submit(id);
+  }
 }
 
 module.exports = PaymentOrderController;

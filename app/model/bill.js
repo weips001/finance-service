@@ -39,7 +39,14 @@ module.exports = app => {
       type: String,
       ref: "Company"
     },
-    openid: String
+    //微信id
+    openid: String,
+    // 报销人
+    applyUser: String,
+    // 凭证号
+    voucherNumber: String,
+    // 录入方式 phone - 手机 input - 手动
+    inputMethod: String
   });
   return mongoose.model('Bill', BillSchema);
 };

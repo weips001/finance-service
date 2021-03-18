@@ -7,4 +7,5 @@ module.exports = app => {
   router.post('/api/paymentOrder', controller.paymentOrder.add);
   router.put('/api/paymentOrder/:id', controller.paymentOrder.update);
   router.delete('/api/paymentOrder', controller.paymentOrder.remove);
+  router.post('/api/paymentOrder/submit', controller.paymentOrder.submit);
 };

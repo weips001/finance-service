@@ -43,6 +43,11 @@ module.exports = app => {
       type: Number,
       required: true
     },
+    // 是否提供发票及时间 0 - 否 1 - 已提供 2 - 付款后提供 3 - 自定义
+    hasProvideInvoice: {
+      type: String,
+      required: true
+    },
     // 付款自定义信息
     invoiceNote: String,
     // 收款人全称
@@ -58,13 +63,20 @@ module.exports = app => {
     // 账号
     bankAccount: {
       type: String,
+      required: true
     },
-    // 是否提交发票及时间
-
+    
     // 付款单状态 0-草稿状态 1-已提交 2-已退回 3-已完成 
     status: String,
+    // 是否有最晚付款时间 0 - 是 1 - 否
+    hasLastTime: {
+      type: String,
+      required: true
+    },
     // 最晚付款时间
     latestPayTime: String,
+    // 是否备注 0 - 是 1 - 否
+    hasNote: String,
     // 备注
     note: String,
     payTime: String
