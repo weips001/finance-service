@@ -32,6 +32,7 @@ class PaymentOrderService extends Service {
       department: data.department,
       payDigest: data.payDigest,
       payableAll: data.payableAll,
+      payMoney: data.payMoney,
       payedMoney: data.payedMoney,
       invoiceNote: data.invoiceNote,
       payeeName: data.payeeName,
