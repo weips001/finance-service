@@ -69,7 +69,8 @@ class UserService extends Service {
       password: md5('123456'),
       token,
       compId: company.compId,
-      code: data.code
+      code: data.code,
+      openid: data.openid
     });
     await UserModel.save();
     return { code: 0, success: true };
