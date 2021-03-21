@@ -36,6 +36,7 @@ module.exports = app => {
       ref: "Company"
     },
     token: String,
+    code: String
   });
   return mongoose.model('User', UserSchema);
 };

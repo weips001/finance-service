@@ -32,7 +32,7 @@ class UserService extends Service {
       };
     }
     const compId = ctx.request.header.compid
-    const token = app.jwt.sign({ name: data.name }, app.config.jwt.secret);
+    const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
     const UserModel = ctx.model.User({
       id: ctx.helper.generateId(),
       userName: data.userName,
@@ -45,6 +45,33 @@ class UserService extends Service {
     });
     await UserModel.save();
     return { code: 0,success: true };
+  }
+  async addUserByCode(data = {}) {
+    const ctx = this.ctx;
+    const app = this.app;
+    const exist = await this.phoneExist(data.userPhone, data.id);
+    if (exist) {
+      return {
+        code: 1,
+        msg: '改账号已存在',
+        success: false
+      };
+    }
+    const company = await ctx.model.Company.findOne({ code:data.code }).exec()
+    const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
+    const UserModel = ctx.model.User({
+      id: ctx.helper.generateId(),
+      userName: data.userName,
+      department: data.department,
+      userPhone: data.userPhone,
+      userEmail: data.userEmail,
+      password: md5('123456'),
+      token,
+      compId: company.compId,
+      code: data.code
+    });
+    await UserModel.save();
+    return { code: 0, success: true };
   }
   async update(id, data = {}) {
     const ctx = this.ctx;
