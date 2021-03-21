@@ -1,5 +1,5 @@
 'use strict';
-
+const svgCaptcha = require('svg-captcha');
 const Service = require('egg').Service;
 const dayjs = require('dayjs') 
 const svgCaptcha = require('svg-captcha')
@@ -51,11 +51,21 @@ class CompanyService extends Service {
       dueDate: dayjs().add(30, 'day').format(),
       code: code 
     });
-    let user = ctx.service.user.add({
-      userName: data.bossName,
-      userPhone: data.bossPhone,
-      code: code
-    })
+    let userMod = this.phoneExist(data.bossPhone)
+    if(userMod) {
+      await ctx.service.user.update({
+        userName: data.bossName,
+        userPhone: data.bossPhone,
+        code: code
+      })
+    } else {
+      await ctx.service.user.add({
+        userName: data.bossName,
+        userPhone: data.bossPhone,
+        code: code
+      })
+    }
+    
     await CompanyModel.save();
     return { code: 0, ...user };
   }
@@ -103,6 +113,17 @@ class CompanyService extends Service {
       code: 0,
       success: true,
     };
+  }
+  async phoneExist(userPhone, id) {
+    const ctx = this.ctx;
+    const filter = {
+      userPhone,
+    };
+    if (id) {
+      filter.id = { $ne: id };
+    }
+    const User = await ctx.model.User.findOne(filter).lean().exec();
+    return !!User;
   }
   async nameExist(compName, id) {
     const ctx = this.ctx;
