@@ -32,7 +32,7 @@ class UserService extends Service {
       };
     }
     const compId = ctx.request.header.compid
-    const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
+    const token = app.jwt.sign({ name: data.userPhone }, app.config.jwt.secret);
     const UserModel = ctx.model.User({
       id: ctx.helper.generateId(),
       userName: data.userName,
@@ -41,7 +41,8 @@ class UserService extends Service {
       userEmail: data.userEmail,
       password: md5('123456'),
       token,
-      compId: compId
+      compId: compId,
+      openid: data.openid
     });
     await UserModel.save();
     return { code: 0,success: true };
@@ -58,7 +59,7 @@ class UserService extends Service {
       };
     }
     const company = await ctx.model.Company.findOne({ code:data.code }).exec()
-    const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
+    const token = app.jwt.sign({ name: data.userPhone }, app.config.jwt.secret);
     const UserModel = ctx.model.User({
       id: ctx.helper.generateId(),
       userName: data.userName,
@@ -153,6 +154,17 @@ class UserService extends Service {
       data: user,
       auth: Object.keys(auth),
     };
+  }
+  async getUserFromOpenid(openid) {
+    const ctx = this.ctx;
+    const filter = {
+      openid,
+    };
+    const user = await ctx.model.User.findOne(filter).lean().exec();
+    return {
+      code: 0,
+      data: user
+    }
   }
 }
 module.exports = UserService;

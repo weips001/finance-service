@@ -12,7 +12,7 @@ module.exports = app => {
   router.post('/api/login', controller.home.login);
   router.post('/api/register', controller.home.register);
   router.post('/api/wxLogin', controller.wxLogin.wxLogin);
-  router.get('/api/test', controller.test.test);
+  // router.get('/api/test', controller.test.test);
 
   require('./subject')(app);
   require('./role')(app);

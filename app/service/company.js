@@ -2,6 +2,7 @@
 
 const Service = require('egg').Service;
 const dayjs = require('dayjs') 
+const svgCaptcha = require('svg-captcha')
 class CompanyService extends Service {
   async list(filter, limit = 10, offset = 0, sorter) {
     const ctx = this.ctx;
@@ -36,7 +37,7 @@ class CompanyService extends Service {
     }
     const code = this.getCode()
     const flag = this.codeExist(code)
-    if(flag) {
+    if(!flag) {
       this.add(data)
       return
     }

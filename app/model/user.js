@@ -8,8 +8,7 @@ module.exports = app => {
     id: String,
     userCode: String,
     userName: {
-      type: String,
-      required: true
+      type: String
     },
     department: String,
     userPhone: {
@@ -35,6 +34,7 @@ module.exports = app => {
       type: String,
       ref: "Company"
     },
+    openid: String,
     token: String,
     code: String
   });
