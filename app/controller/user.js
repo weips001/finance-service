@@ -60,6 +60,11 @@ class UserController extends Controller {
     const compId = ctx.request.header.compId
     ctx.body = await ctx.service.user.getCurrentUser(token, compId);
   }
+  async getUserFromOpenid() {
+    const ctx = this.ctx;
+    const openid = ctx.request.body.openid
+    ctx.body = await ctx.service.user.getUserFromOpenid(openid)
+  }
 }
 
 module.exports = UserController;
