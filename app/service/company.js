@@ -55,13 +55,15 @@ class CompanyService extends Service {
       await ctx.service.user.update({
         userName: data.bossName,
         userPhone: data.bossPhone,
-        code: code
+        code: code,
+        compId: CompanyModel.id
       })
     } else {
       await ctx.service.user.add({
         userName: data.bossName,
         userPhone: data.bossPhone,
-        code: code
+        code: code,
+        compId: CompanyModel.id
       })
     }
     

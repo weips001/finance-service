@@ -31,7 +31,7 @@ class UserService extends Service {
         success: false
       };
     }
-    const compId = ctx.request.header.compid
+    const compId = ctx.request.header.compid || data.compId
     const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
     const UserModel = ctx.model.User({
       id: ctx.helper.generateId(),
@@ -53,7 +53,7 @@ class UserService extends Service {
     if (exist) {
       return {
         code: 1,
-        msg: '改账号已存在',
+        msg: '该账号已存在',
         success: false
       };
     }
