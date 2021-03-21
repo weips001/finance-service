@@ -68,7 +68,7 @@ class UserService extends Service {
       userEmail: data.userEmail,
       password: md5('123456'),
       token,
-      compId: company.compId,
+      compId: company.id,
       code: data.code,
       openid: data.openid
     });
