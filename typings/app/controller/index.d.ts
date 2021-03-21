@@ -9,6 +9,7 @@ import ExportPaymentOrder = require('../../../app/controller/paymentOrder');
 import ExportRole = require('../../../app/controller/role');
 import ExportSpecialExercises = require('../../../app/controller/specialExercises');
 import ExportSubject = require('../../../app/controller/subject');
+import ExportTest = require('../../../app/controller/test');
 import ExportUser = require('../../../app/controller/user');
 import ExportWxLogin = require('../../../app/controller/wxLogin');
 
@@ -21,6 +22,7 @@ declare module 'egg' {
     role: ExportRole;
     specialExercises: ExportSpecialExercises;
     subject: ExportSubject;
+    test: ExportTest;
     user: ExportUser;
     wxLogin: ExportWxLogin;
   }

@@ -20,6 +20,7 @@ module.exports = app => {
   require('./company')(app)
   require('./bill')(app)
   require('./paymentOrder')(app)
+  require('./test')(app)
 
   // router.get('/*', controller.home.index);
 };

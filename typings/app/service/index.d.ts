@@ -12,6 +12,7 @@ import ExportPaymentOrder = require('../../../app/service/paymentOrder');
 import ExportRole = require('../../../app/service/role');
 import ExportSpecialExercises = require('../../../app/service/specialExercises');
 import ExportSubject = require('../../../app/service/subject');
+import ExportTest = require('../../../app/service/test');
 import ExportUser = require('../../../app/service/user');
 import ExportVip = require('../../../app/service/vip');
 
@@ -23,6 +24,7 @@ declare module 'egg' {
     role: AutoInstanceType<typeof ExportRole>;
     specialExercises: AutoInstanceType<typeof ExportSpecialExercises>;
     subject: AutoInstanceType<typeof ExportSubject>;
+    test: AutoInstanceType<typeof ExportTest>;
     user: AutoInstanceType<typeof ExportUser>;
     vip: AutoInstanceType<typeof ExportVip>;
   }
