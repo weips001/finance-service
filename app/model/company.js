@@ -18,7 +18,8 @@ module.exports = app => {
     createTime: {
       type: String,
       default: new Date().toString()
-    }
+    },
+    code: String,
   })
   return mongoose.model('Company', CompanySchema);
 };

@@ -8,4 +8,5 @@ module.exports = app => {
   router.post('/api/user', controller.user.add);
   router.put('/api/user/:id', controller.user.update);
   router.delete('/api/user', controller.user.remove);
+  router.post('/api/addUserByCode', controller.user.addUserByCode);
 };

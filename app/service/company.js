@@ -34,6 +34,12 @@ class CompanyService extends Service {
         success: false,
       };
     }
+    const code = this.getCode()
+    const flag = this.codeExist(code)
+    if(flag) {
+      this.add(data)
+      return
+    }
     const CompanyModel = ctx.model.Company({
       id: ctx.helper.generateId(),
       compName: data.compName,
@@ -42,9 +48,15 @@ class CompanyService extends Service {
       bossName: data.bossName,
       bossPhone: data.bossPhone,
       dueDate: dayjs().add(30, 'day').format(),
+      code: code 
     });
+    let user = ctx.service.user.add({
+      userName: data.bossName,
+      userPhone: data.bossPhone,
+      code: code
+    })
     await CompanyModel.save();
-    return { code: 0 };
+    return { code: 0, ...user };
   }
   async update(id, data = {}) {
     const ctx = this.ctx;
@@ -101,6 +113,22 @@ class CompanyService extends Service {
     }
     const Company = await ctx.model.Company.findOne(filter).lean().exec();
     return !!Company;
+  }
+  async codeExist(code) {
+    const ctx = this.ctx;
+    const filter = {
+      code,
+    };
+    const Company = await ctx.model.Company.findOne(filter).lean().exec();
+    return !!Company;
+  }
+  getCode() {
+    let codeConfig = {
+			size: 6,// 验证码长度
+			ignoreChars: '0o1i', // 验证码字符中排除 0o1i
+	  }
+	  let captcha = svgCaptcha.create(codeConfig);
+    return captcha.text
   }
 }
 module.exports = CompanyService;
