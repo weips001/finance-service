@@ -101,6 +101,9 @@ class UserService extends Service {
     if (typeof data.password !== 'undefined') {
       UserModel.password = data.password;
     }
+    if (typeof data.compId !== 'undefined') {
+      UserModel.compId = data.compId;
+    }
     await UserModel.save();
     return { code: 0, success: true };
   }
