@@ -99,13 +99,13 @@ class BillService extends Service {
     if(bill) {
       console.log('id', bill.id)
       return {
-        code: 0,
-        msg: '发票不存在，可以录入'
+        code: 1,
+        msg: '发票已存在'
       }
     }
     return {
-      code: '1',
-      msg: '发票已存在'
+      code: 0,
+      msg: '发票不存在，可以录入'
     }
   }
   async nameExist(billNumber, id) {
