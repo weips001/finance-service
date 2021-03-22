@@ -50,16 +50,18 @@ class CompanyService extends Service {
       dueDate: dayjs().add(30, 'day').format(),
       code: code 
     });
-    let userMod = this.phoneExist(data.bossPhone)
+    let userMod = await this.phoneExist(data.bossPhone)
+    let user = {}
     if(userMod) {
-      await ctx.service.user.update({
+      const User = await ctx.model.User.findOne({userPhone: data.bossPhone}).lean().exec();
+      user = await ctx.service.user.update(User.id, {
         userName: data.bossName,
         userPhone: data.bossPhone,
         code: code,
         compId: CompanyModel.id
       })
     } else {
-      await ctx.service.user.add({
+      user = await ctx.service.user.add({
         userName: data.bossName,
         userPhone: data.bossPhone,
         code: code,
