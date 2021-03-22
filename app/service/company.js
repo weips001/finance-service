@@ -54,6 +54,7 @@ class CompanyService extends Service {
     let user = {}
     if(userMod) {
       const User = await ctx.model.User.findOne({userPhone: data.bossPhone}).lean().exec();
+      console.log(User, 57777)
       user = await ctx.service.user.update(User.id, {
         userName: data.bossName,
         userPhone: data.bossPhone,

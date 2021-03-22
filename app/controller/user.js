@@ -7,10 +7,12 @@ class UserController extends Controller {
     const ctx = this.ctx;
     const query = ctx.query;
     const {current, pageSize} = ctx.query;
-    const compId = ctx.request.header.compid 
     const filter = {
-      compId
     };
+    const compId = ctx.request.header.compid 
+    if(compId) {
+      filter.compId = query.compId
+    }
     if (query.userCode) {
       filter['userCode'] = new RegExp(ctx.helper.escapeStringRegExp(query.userCode), 'i');
     }
