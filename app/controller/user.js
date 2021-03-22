@@ -11,7 +11,7 @@ class UserController extends Controller {
     };
     const compId = ctx.request.header.compid 
     if(compId) {
-      filter.compId = query.compId
+      filter.compId = compId
     }
     if (query.userCode) {
       filter['userCode'] = new RegExp(ctx.helper.escapeStringRegExp(query.userCode), 'i');

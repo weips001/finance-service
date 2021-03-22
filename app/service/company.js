@@ -71,7 +71,7 @@ class CompanyService extends Service {
     }
     
     await CompanyModel.save();
-    return { code: 0, ...user };
+    return { code: 0, ...user, compId: CompanyModel.id};
   }
   async update(id, data = {}) {
     const ctx = this.ctx;
