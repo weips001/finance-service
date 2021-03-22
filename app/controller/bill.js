@@ -18,6 +18,9 @@ class BillController extends Controller {
     if (query.money) {
       filter['money'] = new RegExp(ctx.helper.escapeStringRegExp(query.money), 'i');
     }
+    if (query.openid) {
+      filter['openid'] = new RegExp(ctx.helper.escapeStringRegExp(query.openid), 'i');
+    }
     const sorter= ctx.query.sorter  
     const limit = parseInt(pageSize || 20);
     const offset = (parseInt(current || 1) - 1) * limit;

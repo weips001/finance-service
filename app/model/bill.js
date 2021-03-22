@@ -45,7 +45,9 @@ module.exports = app => {
     // 凭证号
     voucherNumber: String,
     // 录入方式 phone - 手机 input - 手动
-    inputMethod: String
+    inputMethod: String,
+    // 录入人
+    inputUser: String
   });
   return mongoose.model('Bill', BillSchema);
 };

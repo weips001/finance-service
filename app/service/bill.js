@@ -34,6 +34,8 @@ class BillService extends Service {
         success: false,
       };
     }
+    const compId = ctx.request.header.compid 
+    const user = await ctx.model.User.findOne({openid: data.openid}).exec()
     const BillModel = ctx.model.Bill({
       id: ctx.helper.generateId(),
       billCode: data.billCode,
@@ -41,9 +43,12 @@ class BillService extends Service {
       money: data.money,
       billDate: data.billDate,
       checkCode: data.checkCode,
-      createTime: data.createTime,
-      compId: data.compId,
-      openid: data.openid
+      compId: compId,
+      openid: data.openid,
+      applyUser: data.applyUser,
+      voucherNumber: data.voucherNumber,
+      inputMethod: data.inputMethod,
+      inputUser: user.userName
     });
     await BillModel.save();
     return { code: 0,success: true, msg: '添加成功'};
