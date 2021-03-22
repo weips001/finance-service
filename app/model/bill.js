@@ -28,8 +28,7 @@ module.exports = app => {
     },
     // 校验码
     checkCode: {
-      type: String,
-      required: true
+      type: String
     },
     createTime: { 
       type: String,
