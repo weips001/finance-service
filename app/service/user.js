@@ -49,29 +49,17 @@ class UserService extends Service {
   }
   async addUserByCode(data = {}) {
     const ctx = this.ctx;
-    const app = this.app;
-    const exist = await this.phoneExist(data.userPhone, data.id);
-    if (exist) {
+    const company = await ctx.model.Company.findOne({ code: data.code }).exec()
+    if(!company) {
       return {
         code: 1,
-        msg: '该账号已存在',
-        success: false
-      };
+        success: false,
+        msg: '邀请码错误'
+      }
     }
-    const company = await ctx.model.Company.findOne({ code:data.code }).exec()
-    const token = app.jwt.sign({ name: data.userPhone }, app.config.jwt.secret);
-    const UserModel = ctx.model.User({
-      id: ctx.helper.generateId(),
-      userName: data.userName,
-      department: data.department,
-      userPhone: data.userPhone,
-      userEmail: data.userEmail,
-      password: md5('123456'),
-      token,
-      compId: company.id,
-      code: data.code,
-      openid: data.openid
-    });
+    const UserModel = await ctx.model.User.findOne({userPhone: data.userPhone})
+    UserModel.compId = company.id
+    UserModel.code = company.code
     await UserModel.save();
     return { code: 0, success: true };
   }
