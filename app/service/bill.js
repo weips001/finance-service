@@ -105,6 +105,7 @@ class BillService extends Service {
       console.log('id', bill.id)
       return {
         code: 1,
+        data: bill,
         msg: '发票已存在'
       }
     }
