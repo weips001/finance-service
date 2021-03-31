@@ -11,12 +11,12 @@ class HomeController extends Controller {
     data.password = md5(data.password);
     const UserModel = await ctx.model.User.findOne(data).exec();
     if (UserModel) {
-      const token = app.jwt.sign({ name: data.name }, app.config.jwt.secret, {
+      const token = app.jwt.sign({ userName: data.userName }, app.config.jwt.secret, {
         expiresIn: 60 * 60,
       });
       UserModel.token = token;
       await UserModel.save();
-      ctx.body = { code: 0, token };
+      ctx.body = { code: 0, token, data: UserModel };
       return;
     }
     ctx.body = {

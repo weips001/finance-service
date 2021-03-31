@@ -23,15 +23,29 @@ class UserService extends Service {
   async add(data = {}) {
     const ctx = this.ctx;
     const app = this.app;
-    const exist = await this.phoneExist(data.userPhone, data.id);
-    if (exist) {
-      return {
-        code: 1,
-        msg: '改账号已存在',
-        success: false
-      };
-    }
     const compId = ctx.request.header.compid || data.compId
+    const exist = await ctx.model.User.findOne({  userPhone: data.userPhone }).lean().exec();
+    console.log(exist, 2888)
+    if (exist) {
+      if(exist.compId) {
+        return {
+          code: 1,
+          msg: '该账号以存在',
+          data: exist,
+          success: true
+        }
+      } else {
+        exist.compId = compId
+        console.log(exist, 399999)
+        await exist.save()
+        return {
+          code: 1,
+          msg: '该账号已存在',
+          success: true,
+          data: exist
+        };
+      }
+    }
     const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
     const UserModel = ctx.model.User({
       id: ctx.helper.generateId(),
