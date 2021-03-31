@@ -159,7 +159,11 @@ class UserService extends Service {
     };
     const user = await ctx.model.User.findOne(filter).lean().exec();
     const role = user.role;
-    const roleList = await ctx.model.Role.find({ id: { $in: role } });
+    const roleList = await ctx.model.Role.find({
+      id: {
+        $in: role
+      }
+    });
     const auth = {};
     roleList.forEach(item => {
       item.auth.forEach(item0 => {
