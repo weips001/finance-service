@@ -12,7 +12,11 @@ class HomeController extends Controller {
     } = this;
     const data = ctx.request.body;
     data.password = md5(data.password);
-    const UserModel = await ctx.model.User.findOne(data).exec();
+		const filter = {
+			password: data.password,
+			userPhone: data.userPhone
+		}
+    const UserModel = await ctx.model.User.findOne(filter).exec();
     if (UserModel) {
       if(UserModel.compId) {
         const school = await ctx.model.School.findOne({id:UserModel.compId}).exec();
@@ -41,6 +45,7 @@ class HomeController extends Controller {
       };
       return;
     }
+		console.log(UserModel, 444)
     ctx.body = {
       code: 1,
       msg: '用户名或密码错误',
