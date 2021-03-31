@@ -60,6 +60,7 @@ class UserService extends Service {
     const UserModel = await ctx.model.User.findOne({userPhone: data.userPhone})
     UserModel.compId = company.id
     UserModel.code = company.code
+    UserModel.userName = data.userName
     await UserModel.save();
     return { code: 0, success: true };
   }
