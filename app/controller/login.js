@@ -17,20 +17,10 @@ class HomeController extends Controller {
 			userPhone: data.userPhone
 		}
     const UserModel = await ctx.model.User.findOne(filter).exec();
+		console.log(UserModel, 200)
     if (UserModel) {
-      if(UserModel.compId) {
-        const school = await ctx.model.School.findOne({id:UserModel.compId}).exec();
-        if(school){
-					// if(school && school.perioOfValidity && new Date()> school.perioOfValidity){
-          if(UserModel.role.includes(-2)){
-            UserModel.overdue = false
-          } else {
-            UserModel.overdue = false
-          }
-        }
-      }
       const token = app.jwt.sign({
-        name: data.name
+        name: data.userName
       }, app.config.jwt.secret, {
         expiresIn: 60 * 60,
       });
@@ -40,8 +30,7 @@ class HomeController extends Controller {
       ctx.body = {
         code: 0,
         token,
-        compId,
-        overdue: UserModel.overdue,
+        compId
       };
       return;
     }

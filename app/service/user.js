@@ -157,7 +157,9 @@ class UserService extends Service {
     const filter = {
       token,
     };
+    console.log(token, 160000)
     const user = await ctx.model.User.findOne(filter).lean().exec();
+    console.log(user, 161111)
     const role = user.role;
     const roleList = await ctx.model.Role.find({
       id: {
