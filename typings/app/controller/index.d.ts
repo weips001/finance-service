@@ -4,7 +4,8 @@
 import 'egg';
 import ExportBill = require('../../../app/controller/bill');
 import ExportCompany = require('../../../app/controller/company');
-import ExportHome = require('../../../app/controller/home');
+import ExportInit = require('../../../app/controller/init');
+import ExportLogin = require('../../../app/controller/login');
 import ExportPaymentOrder = require('../../../app/controller/paymentOrder');
 import ExportRole = require('../../../app/controller/role');
 import ExportSpecialExercises = require('../../../app/controller/specialExercises');
@@ -17,7 +18,8 @@ declare module 'egg' {
   interface IController {
     bill: ExportBill;
     company: ExportCompany;
-    home: ExportHome;
+    init: ExportInit;
+    login: ExportLogin;
     paymentOrder: ExportPaymentOrder;
     role: ExportRole;
     specialExercises: ExportSpecialExercises;

@@ -9,9 +9,10 @@ module.exports = app => {
     controller
   } = app;
 
-  router.post('/api/login', controller.home.login);
-  router.post('/api/register', controller.home.register);
+  router.post('/api/login', controller.login.login);
+  router.post('/api/register', controller.login.register);
   router.post('/api/wxLogin', controller.wxLogin.wxLogin);
+  router.get('/api/init', controller.init.init);
   // router.get('/api/test', controller.test.test);
 
   require('./subject')(app);

@@ -36,7 +36,6 @@ class UserService extends Service {
         }
       } else {
         exist.compId = compId
-        console.log(exist, 399999)
         await exist.save()
         return {
           code: 1,
@@ -46,12 +45,24 @@ class UserService extends Service {
         };
       }
     }
+    if(data.role.length>0) {
+      const RoleModel = await ctx.model.Role.find({
+        id: {
+          $in: data.role
+        }
+      }).exec()
+      data.roleName = RoleModel.map(item => {
+        return item.name
+      })
+    }
     const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
     const UserModel = ctx.model.User({
       id: ctx.helper.generateId(),
       userName: data.userName,
       department: data.department,
       userPhone: data.userPhone,
+      role: data.role,
+      roleName: data.roleName,
       userEmail: data.userEmail,
       password: md5('123456'),
       token,

@@ -6,7 +6,9 @@ class RoleController extends Controller {
   async list() {
     const ctx = this.ctx;
     const query = ctx.query;
+    const compId = ctx.request.header.compid;
     const filter = {
+      compId
     };
     query.Type ? filter.Type = query.Type : null;
     const limit = parseInt(query.limit || 10);

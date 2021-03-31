@@ -4,24 +4,34 @@ const Service = require('egg').Service;
 class RoleService extends Service {
   async list(filter, limit = 10, offset = 0) {
     const ctx = this.ctx;
-    const [ list, total ] = await Promise.all([
+    const [list, total] = await Promise.all([
       ctx.model.Role.find(filter).skip(offset).limit(limit)
-        .lean()
-        .exec(),
+      .lean()
+      .exec(),
       ctx.model.Role.countDocuments(filter)
-        .lean()
-        .exec(),
+      .lean()
+      .exec(),
     ]);
-    return { list, total, code: 0 };
+    return {
+      list,
+      total,
+      code: 0
+    };
   }
   async get(id) {
     const ctx = this.ctx;
-    const doc = await ctx.model.Role.findOne({ id }).lean().exec();
-    return { code: 0, data: doc };
+    const doc = await ctx.model.Role.findOne({
+      id
+    }).lean().exec();
+    return {
+      code: 0,
+      data: doc
+    };
   }
   async add(data = {}) {
     const ctx = this.ctx;
-    const exist = await this.nameExist(data.name, data.id);
+    const compId = ctx.request.header.compid;
+    const exist = await this.nameExist(data.name, compId);
     if (exist) {
       return {
         code: 1,
@@ -33,26 +43,26 @@ class RoleService extends Service {
       name: data.name,
       auth: data.auth,
       desc: data.desc,
+      compId
     });
     await RoleModel.save();
-    return { code: 0 };
+    return {
+      success: true,
+      msg: '添加成功',
+      code: 0
+    };
   }
   async update(id, data = {}) {
     const ctx = this.ctx;
-    const RoleModel = await ctx.model.Role.findOne({ id }).exec();
+    const RoleModel = await ctx.model.Role.findOne({
+      id
+    }).exec();
     if (!RoleModel) {
       return {
         code: 1,
         msg: 'Role不存在',
       };
     }
-    // const exist = await this.nameExist(data.name, data._id);
-    // if (exist) {
-    //   return {
-    //     code: 1,
-    //     msg: '角色名重复',
-    //   };
-    // }
     if (typeof data.name !== 'undefined') {
       RoleModel.name = data.name;
     }
@@ -64,30 +74,36 @@ class RoleService extends Service {
     }
     RoleModel.updateTime = new Date();
     await RoleModel.save();
-    return { code: 0 };
+    return {
+      success: true,
+      msg: '修改成功',
+      code: 0
+    };
   }
   async remove(id) {
     const ctx = this.ctx;
-    const Role = await ctx.model.Role.findOne({ id }).exec();
+    const Role = await ctx.model.Role.findOne({
+      id
+    }).exec();
     if (!Role) {
       return {
-        code: 0,
+        code: 1,
         msg: '该角色不存在',
       };
     }
     await Role.remove();
     return {
+      success: true,
+      msg: '删除成功',
       code: 0,
     };
   }
-  async nameExist(name, id) {
+  async nameExist(name, compId) {
     const ctx = this.ctx;
     const filter = {
       name,
+      compId
     };
-    if (id) {
-      filter.id = { $ne: id };
-    }
     const Role = await ctx.model.Role.findOne(filter).lean().exec();
     return !!Role;
   }

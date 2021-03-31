@@ -6,17 +6,39 @@ const md5 = require('md5-node');
 
 class HomeController extends Controller {
   async login() {
-    const { ctx, app } = this;
+    const {
+      ctx,
+      app
+    } = this;
     const data = ctx.request.body;
     data.password = md5(data.password);
     const UserModel = await ctx.model.User.findOne(data).exec();
     if (UserModel) {
-      const token = app.jwt.sign({ userName: data.userName }, app.config.jwt.secret, {
+      if(UserModel.compId) {
+        const school = await ctx.model.School.findOne({id:UserModel.compId}).exec();
+        if(school){
+					// if(school && school.perioOfValidity && new Date()> school.perioOfValidity){
+          if(UserModel.role.includes(-2)){
+            UserModel.overdue = false
+          } else {
+            UserModel.overdue = false
+          }
+        }
+      }
+      const token = app.jwt.sign({
+        name: data.name
+      }, app.config.jwt.secret, {
         expiresIn: 60 * 60,
       });
       UserModel.token = token;
+      const compId = UserModel.compId
       await UserModel.save();
-      ctx.body = { code: 0, token, data: UserModel };
+      ctx.body = {
+        code: 0,
+        token,
+        compId,
+        overdue: UserModel.overdue,
+      };
       return;
     }
     ctx.body = {
@@ -26,9 +48,12 @@ class HomeController extends Controller {
     return;
   }
   async register() {
-    const { ctx, app } = this;
+    const {
+      ctx,
+      app
+    } = this;
     const data = ctx.request.body;
-    if (!data.callPhone) {
+    if (!data.userPhone) {
       ctx.body = {
         code: 1,
         msg: '请输入手机号',
@@ -42,7 +67,7 @@ class HomeController extends Controller {
       };
       return;
     }
-    const exist = await this.phoneExist(data.callPhone);
+    const exist = await this.phoneExist(data.userPhone);
     if (exist) {
       this.ctx.body = {
         code: 1,
@@ -57,7 +82,9 @@ class HomeController extends Controller {
       };
       return;
     }
-    const token = app.jwt.sign({ name: data.name }, app.config.jwt.secret, {
+    const token = app.jwt.sign({
+      name: data.name
+    }, app.config.jwt.secret, {
       expiresIn: 60 * 60,
     });
 
@@ -65,7 +92,7 @@ class HomeController extends Controller {
       id: ctx.helper.generateId(),
       name: data.name,
       password: md5(data.password),
-      callPhone: data.callPhone,
+      userPhone: data.userPhone,
       token,
     });
     await userModel.save();
@@ -76,17 +103,19 @@ class HomeController extends Controller {
     };
     return;
   }
-  async phoneExist(callPhone, password) {
+  async phoneExist(userPhone, password) {
     const ctx = this.ctx;
     const filter = {
-      callPhone,
+      userPhone,
     };
     if (password) {
       filter.password = password;
     }
     const user = await ctx.model.User.findOne(filter).lean().exec();
     if (user) {
-      return { isUser: !!user };
+      return {
+        isUser: !!user
+      };
     }
 
   }
