@@ -9,6 +9,7 @@ module.exports = app => {
     name: String,
     auth: [ String ],
     desc: String,
+    compId: String,
     creator: String,
     creatorName: String,
     createTime: { type: Date, default: Date.now },

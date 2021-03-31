@@ -25,7 +25,6 @@ class UserService extends Service {
     const app = this.app;
     const compId = ctx.request.header.compid || data.compId
     const exist = await ctx.model.User.findOne({  userPhone: data.userPhone }).lean().exec();
-    console.log(exist, 2888)
     if (exist) {
       if(exist.compId) {
         return {

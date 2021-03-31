@@ -26,6 +26,7 @@ class CompanyService extends Service {
   }
   async add(data = {}) {
     const ctx = this.ctx;
+    const app = this.app;
     const comMod = await this.nameExist(data.compName)
     if (comMod) {
       return {
@@ -52,6 +53,9 @@ class CompanyService extends Service {
     });
     let userMod = await this.phoneExist(data.bossPhone)
     let user = {}
+    const token = app.jwt.sign({
+      name: data.name
+    }, app.config.jwt.secret);
     if(userMod) {
       const User = await ctx.model.User.findOne({userPhone: data.bossPhone}).lean().exec();
       user = await ctx.service.user.update(User.id, {
@@ -65,7 +69,9 @@ class CompanyService extends Service {
         userName: data.bossName,
         userPhone: data.bossPhone,
         code: code,
-        compId: CompanyModel.id
+        role: -1,
+        compId: CompanyModel.id,
+        token
       })
     }
     
