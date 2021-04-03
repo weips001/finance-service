@@ -13,7 +13,7 @@ class RoleService extends Service {
       .exec(),
     ]);
     return {
-      list,
+      data: list,
       total,
       code: 0
     };
@@ -69,7 +69,7 @@ class RoleService extends Service {
     if (typeof data.desc !== 'undefined') {
       RoleModel.desc = data.desc;
     }
-    if (typeof data.desc !== 'undefined') {
+    if (typeof data.auth !== 'undefined') {
       RoleModel.auth = data.auth;
     }
     RoleModel.updateTime = new Date();

@@ -63,8 +63,7 @@ class UserController extends Controller {
   }
   async getCurrentUser() {
     const ctx = this.ctx;
-    const query = ctx.query
-    const token = query.token;
+    const token = ctx.request.header.token 
     ctx.body = await ctx.service.user.getCurrentUser(token);
   }
   async getUserFromOpenid() {

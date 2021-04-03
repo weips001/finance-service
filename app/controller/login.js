@@ -17,12 +17,11 @@ class HomeController extends Controller {
 			userPhone: data.userPhone
 		}
     const UserModel = await ctx.model.User.findOne(filter).exec();
-		console.log(UserModel, 200)
     if (UserModel) {
       const token = app.jwt.sign({
         name: data.userName
       }, app.config.jwt.secret, {
-        expiresIn: 60 * 60,
+        expiresIn: 6000 * 6000,
       });
       UserModel.token = token;
       const compId = UserModel.compId
