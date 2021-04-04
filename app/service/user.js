@@ -124,7 +124,6 @@ class UserService extends Service {
   }
   async remove(data) {
     const ctx = this.ctx;
-    console.log(data, 8222)
     data.deleteArr.forEach(async (id)=>{
       const User = await ctx.model.User.findOne({ id }).exec();
       if (!User) {
@@ -133,7 +132,6 @@ class UserService extends Service {
           msg: '该用户不存在',
         };
       }
-      console.log(User, 9000)
       await User.remove();
     })
     return {

@@ -19,6 +19,7 @@ module.exports = appInfo => {
 
   config.jwt = {
     secret: '123456', // 自定义 token 的加密条件字符串
+    enable: true
   };
   config.security = {
     csrf: {

@@ -2,7 +2,7 @@
 
 module.exports = app => {
   const { router, controller, jwt } = app;
-  router.get('/api/role', controller.role.list);
+  router.get('/api/role', jwt, controller.role.list);
   router.get('/api/role/:id', controller.role.get);
   router.post('/api/role', controller.role.add);
   router.put('/api/role/:id', controller.role.update);

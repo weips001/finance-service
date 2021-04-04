@@ -3,9 +3,11 @@
 
 import 'egg';
 import ExportJwt = require('../../../app/middleware/jwt');
+import ExportJwtCopy = require('../../../app/middleware/jwtCopy');
 
 declare module 'egg' {
   interface IMiddleware {
     jwt: typeof ExportJwt;
+    jwtCopy: typeof ExportJwtCopy;
   }
 }

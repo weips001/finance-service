@@ -3,38 +3,43 @@ const JWT = require('jsonwebtoken');
 
 module.exports = options => {
   return async function(ctx, next) {
-    const token = ctx.request.header.authorization;
-    const method = ctx.method.toLowerCase();
-    if (method === 'get') {
-      await next();
-    } else if (!token) {
-      if (ctx.path === '/api/v1/signup' || ctx.path === '/api/v1/signin') {
+    if(ctx.url === '/api/login') {
+      await next()
+      return
+    }
+    const token = ctx.request.header.token;
+    let decode= null;
+    if (token) {
+      try {
+        // 解码token
+        decode = ctx.app.jwt.verify(token, options.secret);
         await next();
-      } else {
-        ctx.throw(401, '未登录, 请先登录!!!');
+      } catch (error) {
+        ctx.status = 200;
+        if(error.message === 'jwt expired') {
+          ctx.body = {
+            code: "Unauthorized",
+            message: 'Token已过期,请重新登陆'
+          };
+        } else if(error.message === 'invalid signature') {
+          ctx.body = {
+            code: "Unauthorized",
+            message: '一个假冒的Token,一边玩去'
+          };
+        } else {
+          ctx.body = {
+            code: "Unauthorized",
+            message: '无效的token'
+          };
+        }     
+        return;
       }
     } else {
-      let decode;
-      try {
-        console.log(token);
-        decode = JWT.verify(token, options.secret);
-        if (!decode || !decode.userName) {
-          ctx.throw(401, '没有权限，请登录');
-        }
-        if (Date.now() - decode.expire > 0) {
-          ctx.throw(401, 'Token已过期');
-        }
-        const user = await ctx.model.User.find({
-          userName: decode.userName,
-        });
-        if (user) {
-          await next();
-        } else {
-          ctx.throw('401', '用户信息验证失败');
-        }
-      } catch (e) {
-        console.log(e);
-      }
+      ctx.status = 200;
+      ctx.body = {
+        message: '没有token',
+      };
+      return;
     }
-  };
-};
+  }
+}
