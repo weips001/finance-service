@@ -3,7 +3,7 @@ const JWT = require('jsonwebtoken');
 
 module.exports = options => {
   return async function(ctx, next) {
-    if(ctx.url === '/api/login') {
+    if(ctx.url === '/api/login'|| '/api/wxGetToken') {
       await next()
       return
     }
@@ -35,17 +35,11 @@ module.exports = options => {
         return;
       }
     } else {
-      // 判断是否为手机端
-      if(false) {
-        await next()
-        return
-      } else {
-        ctx.status = 200;
-        ctx.body = {
-          message: '没有token',
-        };
-        return;
-      } 
-    }
+      ctx.status = 200;
+      ctx.body = {
+        message: '没有token',
+      };
+      return;
+    } 
   }
 }
