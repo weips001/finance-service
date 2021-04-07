@@ -91,6 +91,15 @@ class RoleService extends Service {
         msg: '该角色不存在',
       };
     }
+    const user = await ctx.model.User.findOne({
+      role: new RegExp(ctx.helper.escapeStringRegExp(id), 'i')
+    })
+    if(!!user) {
+      return {
+        code: 1,
+        msg: '该角色被占用'
+      }
+    }
     await Role.remove();
     return {
       success: true,

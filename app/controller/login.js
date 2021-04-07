@@ -21,7 +21,7 @@ class HomeController extends Controller {
       const token = ctx.app.jwt.sign({
         userName: data.userName
       }, ctx.app.config.jwt.secret, {
-        expiresIn: 6 * 6,
+        expiresIn: 600 * 600,
       });
       UserModel.token = token;
       const compId = UserModel.compId
@@ -95,6 +95,9 @@ class HomeController extends Controller {
       msg: '注册成功',
     };
     return;
+  }
+  async wxlogin() {
+    
   }
   async phoneExist(userPhone, password) {
     const ctx = this.ctx;

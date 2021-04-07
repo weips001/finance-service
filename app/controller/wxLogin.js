@@ -13,6 +13,39 @@ class WxLoginController extends Controller {
     let res = await axios.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secret}&js_code=${js_code}&grant_type=${grant_type}`)
     ctx.body =  {code: 0, ...res}
   }
+  async wxGetToken() {
+    const ctx = this.ctx;
+    const app = this.app;
+    const { userPhone, openId } = ctx.request.body
+    const user = ctx.model.User.findOne({
+      userPhone: userPhone
+    })
+    if(user.openId !== openId) {
+      return {
+        code: 1,
+        msg: '请使用绑定的微信号登陆',
+        success: false
+      }
+    } else {
+      if(user.token) {
+        return {
+          code: 0,
+          token: user.token,
+          success: true
+        }
+      } else {
+        const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
+        user.token = token
+        await user.save()
+        return {
+          code: 0,
+          token: token,
+          success: true
+        }
+      }
+    }
+
+  }
 }
 
 module.exports = WxLoginController;
