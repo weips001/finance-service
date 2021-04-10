@@ -12,6 +12,7 @@ module.exports = app => {
   router.post('/api/login', controller.login.login);
   router.post('/api/register', controller.login.register);
   router.post('/api/wxLogin', controller.wxLogin.wxLogin);
+  router.post('/api/getWeInfo', controller.wxLogin.getWeInfo);
   router.post('/api/wxGetToken', controller.wxLogin.wxGetToken)
   router.get('/api/init', controller.init.init);
   // router.get('/api/test', controller.test.test);
