@@ -17,9 +17,9 @@ class WxLoginController extends Controller {
     const ctx = this.ctx;
     const app = this.app;
     const { userPhone, openId } = ctx.request.body
-    const user = ctx.model.User.findOne({
+    const user = await ctx.model.User.findOne({
       userPhone: userPhone
-    })
+    }).exec();
     if(user.openId !== openId) {
       return {
         code: 1,
