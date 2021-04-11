@@ -3,7 +3,7 @@ const JWT = require('jsonwebtoken');
 
 module.exports = options => {
   return async function(ctx, next) {
-    if(ctx.url === '/api/login'|| '/api/wxGetToken') {
+    if(ctx.url === '/api/login'|| '/api/wxGetToken' || '/api/user') {
       await next()
       return
     }
