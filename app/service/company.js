@@ -62,6 +62,7 @@ class CompanyService extends Service {
         userName: data.bossName,
         userPhone: data.bossPhone,
         code: code,
+        role: -1,
         compId: CompanyModel.id
       })
     } else {
