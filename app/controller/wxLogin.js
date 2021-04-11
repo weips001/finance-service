@@ -20,21 +20,23 @@ class WxLoginController extends Controller {
     ctx.body =  {code: 0, data}
   }
   async wxGetToken() {
+    console.log(1233213)
     const ctx = this.ctx;
     const app = this.app;
     const { userPhone, openId } = ctx.request.body
     const user = await ctx.model.User.findOne({
       userPhone: userPhone
     }).exec();
+    console.log(user, 3000)
     if(user.openId !== openId) {
-      return {
+      ctx.body = {
         code: 1,
         msg: '请使用绑定的微信号登陆',
         success: false
       }
     } else {
       if(user.token) {
-        return {
+        ctx.body = {
           code: 0,
           token: user.token,
           success: true
@@ -43,7 +45,7 @@ class WxLoginController extends Controller {
         const token = app.jwt.sign({ name: data.userName }, app.config.jwt.secret);
         user.token = token
         await user.save()
-        return {
+        ctx.body = {
           code: 0,
           token: token,
           success: true
