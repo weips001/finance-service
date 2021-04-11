@@ -44,7 +44,8 @@ class UserService extends Service {
         };
       }
     }
-    if(data.role.length>0) {
+    console.log('data.role', data.role)
+    if(data.role && data.role.length>0) {
       const RoleModel = await ctx.model.Role.find({
         id: {
           $in: data.role
