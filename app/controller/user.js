@@ -66,10 +66,10 @@ class UserController extends Controller {
     const token = ctx.request.header.token 
     ctx.body = await ctx.service.user.getCurrentUser(token);
   }
-  async getUserFromOpenid() {
+  async getUserFromopenid() {
     const ctx = this.ctx;
     const openid = ctx.request.body.openid
-    ctx.body = await ctx.service.user.getUserFromOpenid(openid)
+    ctx.body = await ctx.service.user.getUserFromopenid(openid)
   }
 }
 

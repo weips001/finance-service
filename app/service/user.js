@@ -174,7 +174,7 @@ class UserService extends Service {
       auth: Object.keys(auth),
     };
   }
-  async getUserFromOpenid(openid) {
+  async getUserFromopenid(openid) {
     const ctx = this.ctx;
     const filter = {
       openid,
