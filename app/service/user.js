@@ -114,7 +114,7 @@ class UserService extends Service {
       UserModel.status = data.status;
     }
     if (typeof data.role !== 'undefined') {
-      UserModel.status = data.role;
+      UserModel.role = data.role;
     }
     if (typeof data.password !== 'undefined') {
       UserModel.password = data.password;
