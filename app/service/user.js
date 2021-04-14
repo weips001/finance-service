@@ -159,6 +159,13 @@ class UserService extends Service {
       token,
     };
     const user = await ctx.model.User.findOne(filter).lean().exec();
+    if(!user) {
+      return {
+        code: 1,
+        msg: '请重新登陆',
+        success: false
+      }
+    }
     const role = user.role;
     const roleList = await ctx.model.Role.find({
       id: {
