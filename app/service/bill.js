@@ -30,7 +30,7 @@ class BillService extends Service {
     if (comMod) {
       return {
         code: 1,
-        msg: '该发票已使用',
+        msg: '该发票已录入',
         success: false,
       };
     }
