@@ -3,12 +3,13 @@ const JWT = require('jsonwebtoken');
 
 module.exports = options => {
   return async function(ctx, next) {
-    if(ctx.url === '/api/login'|| '/api/wxGetToken' || '/api/user') {
+    if(ctx.url === '/api/login'|| ctx.url === '/api/wxGetToken' || ctx.url === '/api/user') {
+      console.log(33737)
       await next()
       return
     }
     const token = ctx.request.header.token;
-    let decode= null;
+    let decode = null
     if (token) {
       try {
         // 解码token
@@ -16,6 +17,7 @@ module.exports = options => {
         await next();
       } catch (error) {
         ctx.status = 200;
+        console.log(error, 1999)
         if(error.message === 'jwt expired') {
           ctx.body = {
             code: "Unauthorized",

@@ -21,7 +21,7 @@ class HomeController extends Controller {
       const token = ctx.app.jwt.sign({
         userName: data.userName
       }, ctx.app.config.jwt.secret, {
-        expiresIn: 600 * 600,
+        expiresIn: 60 * 60,
       });
       UserModel.token = token;
       const compId = UserModel.compId
@@ -78,7 +78,7 @@ class HomeController extends Controller {
     const token = app.jwt.sign({
       name: data.name
     }, app.config.jwt.secret, {
-      expiresIn: 60 * 60,
+      expiresIn: 6 * 1,
     });
 
     const userModel = ctx.model.User({

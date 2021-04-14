@@ -18,12 +18,12 @@ module.exports = appInfo => {
   };
 
   config.jwt = {
+    enable: true,
     secret: '123456', // 自定义 token 的加密条件字符串
-    enable: true
   };
   config.security = {
     csrf: {
-      enable: false,
+      enable: true,
       ignoreJSON: true,
     },
     // domainWhiteList: [ 'http://localhost:8080' ], // 允许访问接口的白名单
