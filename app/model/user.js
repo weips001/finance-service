@@ -30,7 +30,10 @@ module.exports = app => {
       // 密码应该使用某种加密方式进行储存
       type: String
     },
-    role: [String],
+    role: {
+      type: [String],
+      default: []
+    },
     roleName: [String],
     compId: {
       type: String,
